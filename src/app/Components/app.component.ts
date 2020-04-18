@@ -24,7 +24,7 @@ export class AppComponent {
   // ngAfterViewInit is called only after the view did load and the canvas is ready
   ngAfterViewInit() {
     this.ctx = this.myCanvas.nativeElement.getContext('2d');
-    this.ctx.fillStyle = '#ff0000';
+    this.ctx.fillStyle = '#41b82d';
   }
 
   // start is a function which loops by custom frames
