@@ -1,6 +1,6 @@
 import {Component, Input, ViewChild, ElementRef} from '@angular/core';
-import {Grid} from '../Models/Grid/grid';
-import {ShapeService} from '../Services/shape.service';
+import {Grid} from './Models/Grid/grid';
+import {ShapeService} from './Services/shape.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent {
   windowHeight = 800;
   windowWidth = 800;
 
-  constructor(private shapeService: ShapeService) {
+  constructor(public shapeService: ShapeService) {
     this.delayBetweenFrames = 0;
   }
 
