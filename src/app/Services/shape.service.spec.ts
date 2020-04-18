@@ -1,6 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {TestBed, inject} from '@angular/core/testing';
 
-import { ShapeService } from './shape.service';
+import {ShapeService} from './shape.service';
 
 describe('ShapeService', () => {
   beforeEach(() => {
