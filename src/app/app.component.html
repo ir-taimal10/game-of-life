@@ -1,11 +1,19 @@
-<div>
-  <canvas #myCanvas width="800" height="800" style="border:1px solid #77ff00;"></canvas>
-  <div>
-    Choose Grid Type
-    <button type="button" (click)="switchShapeTapped(shapeService.shapeType.glinder)">Glinder</button>
-    <button type="button" (click)="switchShapeTapped(shapeService.shapeType.random)">Random</button>
-    <br/>
-    <label for="delay">Delay Between Frames</label>
-    <input id="delay" type="range" min="1" max="1000" [(ngModel)]="delayBetweenFrames"/>
+<div class="game-of-life">
+  <canvas class="game-of-life__canvas"
+          #myCanvas
+          [height]="windowHeight-4"
+          [width]="windowWidth">
+  </canvas>
+  <div class="game-of-life__actions">
+    <button type="button" (click)="switchShapeTapped(shapeService.shapeType.random)">Actions</button>
+    <div class="game-of-life__advanced-actions">
+      Choose Grid Type
+      <button type="button" (click)="switchShapeTapped(shapeService.shapeType.glinder)">Glinder</button>
+      <button type="button" (click)="switchShapeTapped(shapeService.shapeType.random)">Random</button>
+      <br/>
+      <label for="delay">Delay Between Frames</label>
+      <input id="delay" type="range" min="1" max="1000" [(ngModel)]="delayBetweenFrames"/>
+    </div>
+
   </div>
 </div>

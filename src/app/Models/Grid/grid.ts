@@ -17,7 +17,7 @@ export class Grid extends Array {
   }
 
   _build() {
-    for (let i = 0; i < this._rows; i++) {
+    for (let i = 0; i < this._columns; i++) {
       this[i] = [];
     }
   }
@@ -25,16 +25,16 @@ export class Grid extends Array {
   //  add up the total values for the surrounding cells
   checkSurroundingsCells(row, column) {
     let totalCells = 0;
-    totalCells += this[row - 1][column - 1] || 0; //  top left
-    totalCells += this[row - 1][column] || 0; //  top center
-    totalCells += this[row - 1][column + 1] || 0; //  top right
+    totalCells += this[column - 1][row - 1] || 0; //  top left
+    totalCells += this[column - 1][row] || 0; //  top center
+    totalCells += this[column - 1][row + 1] || 0; //  top right
 
-    totalCells += this[row][column - 1] || 0; //  middle left
-    totalCells += this[row][column + 1] || 0; //  middle right
+    totalCells += this[column][row - 1] || 0; //  middle left
+    totalCells += this[column][row + 1] || 0; //  middle right
 
-    totalCells += this[row + 1][column - 1] || 0; //  bottom left
-    totalCells += this[row + 1][column] || 0; //  bottom center
-    totalCells += this[row + 1][column + 1] || 0; //  bottom right
+    totalCells += this[column + 1][row - 1] || 0; //  bottom left
+    totalCells += this[column + 1][row] || 0; //  bottom center
+    totalCells += this[column + 1][row + 1] || 0; //  bottom right
     return totalCells;
   }
 }

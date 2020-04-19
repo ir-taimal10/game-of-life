@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, ElementRef} from '@angular/core';
+import {Component, Input, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import {Grid} from './Models/Grid/grid';
 import {ShapeService} from './Services/shape.service';
 
@@ -8,15 +8,15 @@ import {ShapeService} from './Services/shape.service';
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   ctx: CanvasRenderingContext2D;
   grid: Grid;
   delayBetweenFrames: number;
-  windowHeight = 800;
-  windowWidth = 800;
+  windowHeight = window.innerHeight;
+  windowWidth = window.innerWidth;
 
   constructor(public shapeService: ShapeService) {
-    this.delayBetweenFrames = 0;
+    this.delayBetweenFrames = 256;
   }
 
   @ViewChild('myCanvas') myCanvas: ElementRef;
@@ -24,7 +24,8 @@ export class AppComponent {
   // ngAfterViewInit is called only after the view did load and the canvas is ready
   ngAfterViewInit() {
     this.ctx = this.myCanvas.nativeElement.getContext('2d');
-    this.ctx.fillStyle = '#41b82d';
+    this.ctx.fillStyle = '#006a61';
+    this.switchShapeTapped(this.shapeService.shapeType.random);
   }
 
   // start is a function which loops by custom frames
@@ -38,15 +39,15 @@ export class AppComponent {
   }
 
   clearGridFromCanvas() {
-    this.ctx.clearRect(0, 0, this.grid.getRows, this.grid.getColumn);
+    this.ctx.clearRect(0, 0, this.grid.getColumn, this.grid.getRows);
   }
 
   drawGridOnCanvas() {
     let liveCount = 0;
-    for (let row = 1; row < this.grid.getRows; row++) { // iterate through rows
-      for (let column = 1; column < this.grid.getColumn; column++) { // iterate through columns
-        if (this.grid[row][column] === 1) {
-          this.ctx.fillRect(row, column, 1, 1);
+    for (let column = 1; column < this.grid.getColumn; column++) { // iterate through columns
+      for (let row = 1; row < this.grid.getRows; row++) { // iterate through rows
+        if (this.grid[column][row] === 1) {
+          this.ctx.fillRect(column, row, 1, 1);
           liveCount++;
 
         }
@@ -56,9 +57,8 @@ export class AppComponent {
 
   updateGridWithGameRules() {
     const copyGrid = new Grid(this.grid.getRows, this.grid.getColumn);
-
-    for (let row = 1; row < this.grid.getRows - 1; row++) {
-      for (let column = 1; column < this.grid.getColumn - 1; column++) {
+    for (let column = 1; column < this.grid.getColumn - 1; column++) {
+      for (let row = 1; row < this.grid.getRows - 1; row++) {
 
         const totalCells = this.grid.checkSurroundingsCells(row, column);
         // apply the rules to each cell:
@@ -68,15 +68,15 @@ export class AppComponent {
         // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
         switch (totalCells) {
           case 2:
-            copyGrid[row][column] = this.grid[row][column];
+            copyGrid[column][row] = this.grid[column][row];
 
             break;
           case 3:
-            copyGrid[row][column] = 1;
+            copyGrid[column][row] = 1;
 
             break;
           default:
-            copyGrid[row][column] = 0;
+            copyGrid[column][row] = 0;
         }
       }
     }
@@ -93,7 +93,7 @@ export class AppComponent {
     // declare a variable because we use it only once
 
 
-    this.grid = new Grid(800, 800);
+    this.grid = new Grid(this.windowHeight, this.windowWidth);
     this.shapeService.initShapeType(type, this.grid);
     this.start();
   }

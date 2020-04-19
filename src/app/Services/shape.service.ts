@@ -15,6 +15,7 @@ export class ShapeService {
       glinder = 0, // number here just in case other developer will insert new shape type in the middle of the shapes and not in the end
       random = 1
     }
+
     this.shapeType = ShapeType;
   }
 
@@ -73,9 +74,9 @@ export class ShapeService {
 
   // random shapes
   setRandom(grid) {
-    for (let row = 0; row < grid.length; row++) {
-      for (let column = 0; column < grid.length; column++) {
-        grid[row][column] = Math.round(Math.random());
+    for (let column = 0; column < grid.length; column++) {
+      for (let row = 0; row < grid.length; row++) {
+        grid[column][row] = Math.round(Math.random());
       }
     }
     return grid;
